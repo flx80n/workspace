@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<button id = "btn">按钮</button>
+
+<script type="text/javascript" src = "jquery/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+window.onload = function(){
+	var btn = document.getElementById("btn");
+	btn.onclick = function(){
+		
+ 		$.ajax({type:'GET',async:true,url:'123.jsp',complete:function(){
+			console.log("111");
+		}});
+		$.ajax({type:'GET',async:true,url:'AjaxServlet',complete:function(){
+			console.log("222");
+		}}); 
+		
+	/* 	$.ajax({
+			type:'GET',
+			url:'AjaxServlet',
+			data:{'id':1},
+			//是否发送异步请求
+			async:true,
+			//发送前调用
+			beforeSend:function(){
+				console.log("发送以前...");
+			},
+			//返回成功调用
+			success:function(){
+				console.log("成功返回...");
+			},
+			//出现异常是调用
+			error:function(){
+				console.log("异常。。");
+			},
+			//返回数据？？
+			complete:function(){   //等价与access
+				console.log("数据返回");
+				console.log(arguments);
+			},
+		}); */
+		
+	};
+};
+
+
+</script>
+
+</body>
+
+
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>搜索</title>
+<style type="text/css">
+#suggest{
+	border: 1px solid #ccc; /*设置div边框 单位1像素 颜色灰色*/
+	width:160px;  /*宽度*/
+	display: none;	/*不显示*/
+}
+ul{
+	list-style-type: none;/*去除列表前的小黑点*/
+}
+#suggest ul li{
+	line-height: 2em;/*行高为2倍字体的大小*/
+	padding:0 1em;
+	cursor: pointer; /*鼠标变成一个小黑手*/
+}
+#suggest ul li:hover{ /*鼠标悬浮*/
+	background:#eee; /*背景色改变*/
+}
+</style>
+</head>
+<body>
+<h1>关键字搜索</h1>
+<input type = "text" name = "name" id = "search"/>
+<button id="btn">搜一搜</button>
+<div id="suggest">
+<ul>
+<!-- 模糊查询的结果 -->
+</ul>
+</div>
+</body>
+<script type="text/javascript">
+	window.onload = function(){
+		var search = document.getElementById("search");
+		search.onkeyup = function(){
+			var n = this.value; // n ="" ----> false  
+			if(!n){return;}
+			//获取XMLHttpRequest对象
+			var xhr = XMLHttpRequest();
+			//绑定处理事件函数
+			xhr.onreadystatechange = func;
+			//打开链接
+			xhr.open('POST'，'search',true);
+			//设置响应头
+			xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+			//发送消息
+			xhr.send('name='+n);
+			//处理函数
+			function func(){
+				//判断readyState  ===  4
+				
+				if(readyState === 4){
+					//判断status === 200
+					if(status === 200){
+						//接受返回的数据
+						var input = xhr.ResponseText;
+						document.getElementsByTagName("ul").innerHTML = input;
+					}
+				}
+			}
+		}
+		
+		
+	}
+
+</script>
+</html>

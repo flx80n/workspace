@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>查询的结果</title>
+<style type="text/css">
+	div,h1,img,ul,li,table,tr,td{
+		padding: 0;
+		margin: 0;
+	}
+	ul{
+		list-style-type: none;
+	}
+	#outer{
+		width:1258px;
+		height:652px;
+		border: 1px solid #red;
+		position:absolute;
+		top:120px;
+		left:200px;
+		margin: 0 auto;
+	}	
+	img{
+	width:300px;
+	height:200px;
+	text-align: center;
+	
+	}
+	#outer ul  li{
+		width:300px;
+		height:200px;
+		float:left;
+		border: 1px solid #ccc;
+		margin: 5px 6px;
+	}
+	
+	#tab{
+		margin:0 auto;
+		width:600px;
+		text-align:center;
+		border-collapse: collapse;
+		border: 1px solid #ccc;
+		display:none;
+		background-color: #acf;
+	}
+	td,tr{
+		border: 1px solid #ccc;
+		width:120px;
+		color:red;
+	}
+</style>
+</head>
+<body>
+	<h1>买汽车，就选会买车</h1>
+	<div id="outer">
+		<ul>
+			<li><img class = "1" src= "images/11.jpg" /></li>
+			<li><img class = "2" src= "images/2.jpg" /></li>
+			<li><img class = "3" src= "images/3.jpg"/></li>
+			<li><img class = "4" src= "images/4.jpg"/></li>
+			<li><img class = "5" src= "images/5.jpg"/></li>
+			<li><img class = "6" src= "images/6.jpg"/></li>
+			<li><img class = "7" src= "images/7.jpg"/></li>
+			<li><img class = "8" src= "images/8.jpg"/></li>
+			<li><img class = "9" src= "images/9.jpg"/></li>
+			<li><img class = "10" src= "images/10.jpg"/></li>
+			<li><img class = "11" src= "images/1.jpg"/></li>
+			<li><img class = "12" src= "images/12.jpg"/></li>
+		</ul>
+	</div>	
+	
+	<table id = "tab">
+			<thead>
+				<tr>
+					<td>车名</td><td>所在城市</td><td>剩余总数</td><td>价格</td><td>车品牌</td>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+	</table>
+<script type="text/javascript" src = "jquery/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+	// 在页面加载成功后发送请求
+	window.onload = function(){
+		
+		var out = document.getElementById("outer");
+		var tab = document.getElementById("tab");
+		var tbody = document.querySelector("tbody");
+		out.onclick = function(){
+			//获取事件对象
+			var e = window.event || arguments[0];
+			//获取目标对象
+			var target = e.srcElement || e.target;
+			if(target.nodeName == "IMG"){
+				
+				 var id = target.className;
+				 $.get('car',{'id':id},function(data){
+					var html = "<tr>";
+					 html +="<td>"+data.name+"</td>";
+					 html +="<td>"+data.city+"</td>";
+					 html +="<td>"+data.count+"</td>";
+					 html +="<td>"+data.price+"</td>";
+					 html +="<td>"+data.brand+"</td>";
+					 html +="</tr>";
+					 tbody.innerHTML = html;
+					 tab.style.display = "block";
+				});	
+			}
+		}
+	};
+</script>
+</body>
+</html>

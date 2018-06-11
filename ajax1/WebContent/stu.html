@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+ul{
+	list-style-type: none;
+}
+</style>
+</head>
+<body>
+<select id="clazz">
+<option value = "0">--请选择--</option>
+<option value = "java1607">java1607</option>
+<option value = "java1608">java1608</option>
+<option value = "java1609">java1609</option>
+</select>
+<select id="stu">
+	<option value="0">--请选择--</option>
+</select>
+<script type="text/javascript" src = "jquery/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+window.onload = function(){
+	//获取第一个下拉列表的对象
+	var clazz = document.getElementById("clazz");
+	//添加改变事件
+	clazz.onchange = function(){
+		//获得值
+		var clazzId = this.value;
+		//如果为零，则直接return;
+		if(clazzId==0){return;}
+		//采用ajax异步获取数据
+		$.getJSON('stu',{'clazzid':clazzId},function(data){
+			//拼接数据，并追加到第二个下拉列表后面。
+			var html = "<option value='0'>--请选择--</option>";
+			for (var i = 0; i < data.length; i++) {
+				var s = data[i];
+				html+="<option value='"+s.id+"'>"+s.name+"</option>";
+			}
+			document.getElementById("stu").innerHTML = html;
+		});
+	}
+};
+	
+
+</script>
+</body>
+
+</html>

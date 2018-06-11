@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+
+ul{
+	list-style-type: none;
+}
+</style>
+</head>
+<body>
+<h1>学生注册</h1>
+<form action="#" method ="post" id="loginForm">
+	<ul>
+		<li>学号：<input type = "text" name = "sn" id = "sn"/></li>
+		<li>学生姓名：<input type = "text" name = "sname" id = "sname"/></li>
+		<li><a href="javascript:;" id="save" class = "0" >保存学生信息</a></li>
+	</ul>
+</form>
+
+<script type="text/javascript" src = "jquery/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+
+	var sn = document.getElementById("sn");
+	var save = document.getElementById("save");
+	sn.onblur = function(){
+		var s = this.value;
+		if(!s){return;}
+		$.get('student',{'sn':s},function(data){
+			console.log(data);
+			alert(data==1?"已存在":"可以使用");
+			if(data == 0){
+				save.className = "1";	
+			}else{
+				save.className = "0";		
+			}
+		});	
+	}
+	
+	//1:为save添加点击事件
+	save.onclick  = function(){
+		//验证sn，name
+		var sn = document.getElementById("sn");
+		var name = document.getElementById("sname");
+		console.log(name.value);
+		var snReg = /^[a-z0-9]{3,10}$/;
+		var nameReg = /^[a-z0-9]{3,10}$/;
+		console.log(snReg.test(sn.value));
+		if(!snReg.test(sn.value)){
+			alert("学生编号格式不正确");
+			return;
+		}
+		if(!nameReg.test(name.value)){
+			alert("学生姓名格式不正确");
+			return;
+		}
+		if(this.className == 0){
+			alert("学生编号不正确请重新输入");
+			return;
+		}
+		$.post('savestu',{'sn':sn.value,'name':name.value},function(data){
+			alert("保存成功");
+		});
+
+		//发送的数据序列化
+// 		var data = $("#loginForm").serialize();
+// 		$.post('savestu',data,function(rs){
+//  			alert("保存成功");
+// 	 	});
+		
+	}
+	
+
+</script>
+</body>
+
+</html>

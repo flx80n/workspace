@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>查询的结果</title>
+<style type="text/css">
+	table{
+		width:400px;
+		border:1px solid #ccc;
+		
+	
+	}
+	tr td{
+		border: 1px solid #ccc;
+	}
+
+
+</style>
+</head>
+<body>
+<table id = "tab">
+<thead>
+<tr>
+	<td>编号</td>
+	<td>产品名称</td>
+	<td>产品价格</td>
+	<td>产品图片</td>
+	<td>时间</td>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<script type="text/javascript">
+	// 在页面加载成功后发送请求
+	window.onload = function(){
+		//创建对象
+		var xhr = new XMLHttpRequest();
+		//绑定事件函数 func
+		xhr.onreadystatechange  = func;
+		//打开
+		xhr.open('GET','productjson',true);
+		//发送
+		xhr.send(null);
+		//接收xml 文件并进行处理
+		function func(){
+			//判断
+			if(xhr.readyState === 4){
+				if(xhr.status === 200){
+					//console.log(JSON.parse(xhr.responseText));
+					var rows = JSON.parse(xhr.responseText);
+					var html = "";
+					for (var i = 0; i < rows.length; i++) {
+						var p = rows[i];
+						html+="<tr>";
+						html+="<td>"+p.id+"</td>";
+						html+="<td>"+p.name+"</td>";
+						html+="<td>"+p.price+"</td>";
+						html+="<td><image src = 'image/"+p.pic+"'/></td>";
+						html+="<td>"+p.ctime+"</td>";
+						html+="</tr>";
+					}
+					var tbody = document.querySelector("#tab tbody");
+					tbody.innerHTML = html;
+					
+					
+				}
+			}
+		}
+	};
+</script>
+</body>
+</html>
